@@ -4,8 +4,10 @@ import { Injectable } from "@nestjs/common";
 
 
 import { EventManager } from '../events/event-manager.js';
-import { NavBar } from "./nav-bar.component.js";
+import { Logo } from './components/logo.component.js';
+import { NavBar } from "./components/nav-bar.component.js";
 
+import { LoginPage } from './pages/login.page.js';
 
 @Injectable()
 export class Gui {
@@ -18,7 +20,8 @@ export class Gui {
 
   render () {
     this.renderer(
-      <Box>
+      <Box flexDirection='column'>
+        <Logo />
         <NavBar em={this.em} tabs={Gui.PUBLIC_TABS}/>
       </Box>
     );

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { Text, Box } from 'ink';
 
-import { EventManager } from '../events/event-manager.js';
+import { EventManager } from '../../events/event-manager.js';
 
 type Props = { em: EventManager, tabs: string[] };
 
@@ -35,7 +35,7 @@ export const NavBar = (props: Props) => {
 
 	return (
 		<Box>
-			<Box flexDirection='row' alignItems='center' paddingX={1}>
+			<Box flexDirection='row' borderStyle='round' alignItems='center' paddingX={1}>
 				{
 					props.tabs.map((tab, i) => (
 						<Box alignSelf='center' alignItems='center' key={`${tab}_container`}>

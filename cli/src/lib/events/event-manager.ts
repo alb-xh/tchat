@@ -30,7 +30,13 @@ export class EventManager {
 
   on (event: string, cb: (payload?: Record<string, unknown>) => void) {
     if (this.isValidEvent(event)) {
-      this.eventEmitter.on(event, cb);
+      this.eventEmitter.on(event, cb)
+    }
+  }
+
+  off (event: string, cb: (payload?: Record<string, unknown>) => void) {
+    if (this.isValidEvent(event)) {
+      this.eventEmitter.off(event, cb)
     }
   }
 

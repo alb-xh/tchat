@@ -6,7 +6,7 @@
   "typings": "./src/index.d.ts",
   "scripts": {
     "build": "cd .. && npx nx build cli",
-    "run-build": "cd ../dist/cli/src/ && npm i && node ./index.js",
+    "run-build": "cd ../dist/cli/src/ && npm i && clear && node ./index.js",
     "dev": "npm run build && npm run run-build"
   },
   "dependencies": {

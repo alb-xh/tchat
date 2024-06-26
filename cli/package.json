@@ -6,8 +6,9 @@
   "typings": "./src/index.d.ts",
   "scripts": {
     "build": "cd .. && npx nx build cli",
-    "run-build": "cd ../dist/cli/src/ && npm i && clear && node ./index.js",
-    "dev": "npm run build && npm run run-build"
+    "run-build": "cp -r ./node_modules ../dist/cli/node_modules && cd ../dist/cli/src/ && clear && node ./index.js",
+    "dev": "npm run build && npm run run-build",
+    "t": ""
   },
   "dependencies": {
     "ink": "^5.0.1",
@@ -15,12 +16,15 @@
     "ink-form": "^2.0.1",
     "ink-gradient": "^3.0.0",
     "lodash": "^4.17.21",
+    "marked": "^13.0.1",
+    "marked-terminal": "^7.1.0",
     "nest-commander": "^3.13.0",
     "react": "^18.3.1",
     "string-width": "^7.1.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.5"
+    "@types/lodash": "^4.17.5",
+    "@types/marked-terminal": "^6.1.1"
   }
 }

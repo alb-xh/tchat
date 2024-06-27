@@ -2,10 +2,12 @@ import _ from 'lodash';
 import readline from 'node:readline';
 import process from 'node:process';
 import EventEmitter from 'node:events';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class EventManager {
+  private readonly logger = new Logger(EventManager.name);
+
   static readonly Events = {
     TERMINATE: 'terminate',
     KEYPRESS: 'keypress',
@@ -44,6 +46,8 @@ export class EventManager {
     readline.emitKeypressEvents(process.stdin);
 
     process.stdin.on('keypress', (_, key) => {
+      this.logger.debug(`Key pressed: ${JSON.stringify(key)}`);
+
       if (key.name === 'c' && key.ctrl === true) {
         this.eventEmitter.emit(EventManager.Events.TERMINATE);
         return;

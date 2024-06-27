@@ -1,4 +1,5 @@
 import React from 'react';
+import process from 'node:process';
 import { Box, Text } from 'ink';
 import stringWidth from 'string-width';
 
@@ -67,3 +68,5 @@ export const Divider = (props: Props) => {
 		</Box>
 	);
 };
+
+export const FullDivider = (props: { title?: string }) => (<Divider width={process.stdout.columns} title={props?.title} />)

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, Box } from 'ink';
 
 import { EventManager } from '../../events/event-manager.js';
-import { markdown } from '../utils/markdown.util.js';
 
 type Props = { em: EventManager, tabs: string[] };
 
@@ -25,7 +24,7 @@ export const TabBar = (props: Props) => {
 
 	return (
 		<Box>
-			<Box flexDirection='row' alignItems='center' paddingX={1}>
+			<Box flexDirection='row' alignItems='center' paddingX={1} borderStyle='round' borderColor="purple">
 				{
 					props.tabs.map((tab, i) => (
 						<Box alignSelf='center' alignItems='center' key={`${tab}_container`}>

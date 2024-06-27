@@ -1,43 +1,39 @@
 import React from 'react';
-import { FormProps, Form } from 'ink-form';
+import { Text, Box } from 'ink';
+import { OrderedList, TextInput } from '@inkjs/ui';
 
-const options = [
-  { label: 'Opt 1', value: 'a' },
-  { label: 'Opt 2', value: 'b' },
-];
+import { Help } from '../components/help.component.js';
+import { EventManager } from '../../events/event-manager.js';
 
-const form: FormProps = {
-  form: {
-    title: 'Login',
-    sections: [
-      {
-        title: 'Text and Number fields',
-        fields: [
-          { type: 'string', name: 'field1', label: 'Input with initial value', initialValue: 'Initial value' },
-          { type: 'string', name: 'field2', label: 'Masked input', mask: '*' },
-          { type: 'integer', name: 'field3', label: 'Integer between -5 and 8, stepsize 2', min: -5, max: 8, step: 2 },
-          { type: 'float', name: 'field4', label: 'Float between 0 and 5, stepsize 0.1', min: 0, max: 5, step: 0.1 },
-        ],
-      },
-      // {
-      //   title: 'Select and boolean fields',
-      //   fields: [
-      //     { type: 'select', name: 'field5', label: 'Select', options },
-      //     { type: 'multiselect', name: 'field6', label: 'Multi Select', options } as never,
-      //     { type: 'boolean', name: 'field7', label: 'Boolean select', options } as never,
-      //   ],
-      // },
-    ],
-  },
-};
+type Props = { em: EventManager };
 
-export const LoginPage = () => {
+export const LoginPage = (props: Props) => {
   return (
-    <Form
-      {...form}
-      onSubmit={result => {
-        console.log(`Finished with value`, result);
-      }}
-    />
+		<Box flexDirection='column'>
+			<Box paddingTop={2} paddingX={1} paddingBottom={1} borderStyle='double'>
+				<OrderedList>
+					<OrderedList.Item>
+						<Box marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+							<Text>Username |</Text>
+							<TextInput isDisabled={true} placeholder='' />
+						</Box>
+					</OrderedList.Item>
+					<OrderedList.Item>
+						<Box paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+							<Text>Password |</Text>
+							<TextInput isDisabled={true} placeholder='' />
+						</Box>
+					</OrderedList.Item>
+				</OrderedList>
+			</Box>
+			<Help
+				em={props.em}
+				hotkeys={[
+					[ '1', 'Focus on username field' ],
+					[ '2', 'Focus on password field' ],
+					[ 'CTRL + S', 'Submit' ],
+				]}
+			/>
+		</Box>
   );
 }

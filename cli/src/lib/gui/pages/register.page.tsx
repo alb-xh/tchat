@@ -1,33 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Box } from 'ink';
 import { OrderedList, PasswordInput, TextInput, Alert } from '@inkjs/ui';
 
 import { Help } from '../components/help.component.js';
 import { EventManager } from '../../events/event-manager.js';
+import { useFocus } from '../hooks/use-focus.hook.js';
 
 type Props = { em: EventManager };
 
 export const RegisterPage = (props: Props) => {
+	const focus = useFocus({ em: props.em, size: 3 });
+
   return (
 		<Box flexDirection='column'>
 			<Box flexDirection='column' paddingTop={2} paddingX={1} paddingBottom={1} borderStyle='double'>
 				<OrderedList>
 					<OrderedList.Item>
-						<Box marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+						<Box borderColor={focus === 0 ? 'blueBright' : ''} marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
 							<Text>Username        |</Text>
-							<TextInput isDisabled={true} placeholder='' />
+							<Box marginLeft={2}><TextInput isDisabled={focus !== 0} placeholder='' /></Box>
 						</Box>
 					</OrderedList.Item>
 					<OrderedList.Item>
-						<Box marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+						<Box borderColor={focus === 1 ? 'blueBright' : ''} marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
 							<Text>Password        |</Text>
-							<PasswordInput isDisabled={true} placeholder='' />
+							<Box marginLeft={2}><PasswordInput isDisabled={focus !== 1} placeholder='' /></Box>
 						</Box>
 					</OrderedList.Item>
           <OrderedList.Item>
-						<Box paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+						<Box borderColor={focus === 2 ? 'blueBright' : ''} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
 							<Text>Repeat Password |</Text>
-							<PasswordInput isDisabled={true} placeholder='' />
+							<Box marginLeft={2}><PasswordInput isDisabled={focus !== 2} placeholder='' /></Box>
 						</Box>
 					</OrderedList.Item>
 				</OrderedList>
@@ -37,9 +40,7 @@ export const RegisterPage = (props: Props) => {
 				em={props.em}
 				hotkeys={[
           [ 'TAB', 'Navigate between tabs' ],
-					[ 'CTRL + 1', 'Focus on username field' ],
-					[ 'CTRL + 2', 'Focus on password field' ],
-          [ 'CTRL + 3', 'Focus on repeat password field' ],
+					[ 'UP/DOWN', 'Navigate between fields' ],
 					[ 'CTRL + S', 'Submit' ],
 				]}
 			/>

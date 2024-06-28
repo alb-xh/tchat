@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
   "scripts": {
-    "build": "cd .. && rm -rf ./dist/gui && npx nx build cli",
+    "build": "cd .. && rm -rf ./dist && npx nx build cli",
     "run-build": "cp -r ./node_modules ../dist/cli/node_modules && cd ../dist/cli/src/ && clear && node ./index.js connect",
     "dev": "npm run build && npm run run-build"
   },

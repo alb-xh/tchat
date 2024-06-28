@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import readline from 'node:readline';
 import process from 'node:process';
 import EventEmitter from 'node:events';

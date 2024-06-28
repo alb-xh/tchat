@@ -69,4 +69,4 @@ export const Divider = (props: Props) => {
 	);
 };
 
-export const FullDivider = (props: { title?: string }) => (<Divider width={process.stdout.columns} title={props?.title} />)
+export const FullDivider = (props: { title?: string }) => (<Divider width={process.stdout.columns - 1} title={props?.title} />)

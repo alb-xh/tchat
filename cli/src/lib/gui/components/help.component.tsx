@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Newline, Box, Text } from 'ink';
+import { Newline, Box } from 'ink';
 
 import { EventManager } from '../../events/event-manager.js';
 import { FullDivider } from './divider.component.js';
@@ -34,11 +34,12 @@ export const Help = (props: Props) => {
     <>
         <Newline />
         <FullDivider title='Help (CTRL + H)' />
-          <Box display={visible ? 'flex' : 'none'} flexDirection='column' alignItems='center'>
-            <Table
-              data={props.hotkeys.map(([ Key, Description ]) => ({ Key, Description }))}
-            />
-          </Box>
+        <Newline />
+        <Box display={visible ? 'flex' : 'none'} flexDirection='column' alignItems='center'>
+          <Table
+            data={props.hotkeys.map(([ Key, Description ]) => ({ Key, Description }))}
+          />
+        </Box>
     </>
   );
 }

@@ -3,6 +3,8 @@ import { Text } from 'ink';
 
 import { EventManager } from '../../../events/event-manager.js';
 import { useKeyPress } from '../../hooks/use-key-press.hook.js';
+import { useToggle } from '../../hooks/use-toggle.hook.js';
+import { clearInterval } from 'node:timers';
 
 type Props = {
   em: EventManager,
@@ -14,6 +16,7 @@ type Props = {
 
 export const TextInput = (props: Props) => {
   const [ value, setValue ] = useState(props.defaultValue ?? '');
+  const [ visible, toggle ] = useToggle(false);
 
   useKeyPress(props.em, (key) => {
     if (
@@ -38,5 +41,12 @@ export const TextInput = (props: Props) => {
     }
   }, [ value, props.onChange ]);
 
-  return (<Text>{props.specialChar ? props.specialChar.repeat(value.length) : value}</Text>)
+  useEffect(() => {
+    const interval = setInterval(toggle, 750);
+    return  () => { clearInterval(interval) }
+  }, [ toggle ])
+
+  return (
+    <Text>{props.specialChar ? props.specialChar.repeat(value.length) : value}{!props.disable && visible ? '|' : ''}</Text>
+  );
 }

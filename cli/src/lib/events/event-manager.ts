@@ -53,7 +53,7 @@ export class EventManager {
       }
 
       if (key) {
-        this.eventEmitter.emit(EventManager.Events.KEYPRESS, { key: key.name, ctrl: key.ctrl ?? false });
+        this.eventEmitter.emit(EventManager.Events.KEYPRESS, key);
         return;
       }
     });

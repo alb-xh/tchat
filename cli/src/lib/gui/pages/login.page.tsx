@@ -10,6 +10,7 @@ import { HelpButton } from '../components/buttons/help.button.component.js'
 import { HelpField } from '../components/help-field.component.js';
 import { TextInput } from '../components/inputs/text-input.component.js';
 import { PasswordInput } from '../components/inputs/password-input.component.js';
+import { passwordRegex, usernameRegex } from '../contants.js';
 
 type Props = { em: EventManager };
 

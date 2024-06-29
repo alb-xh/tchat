@@ -3,24 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { Text, Box } from 'ink';
 
 import { EventManager } from '../../events/event-manager.js';
+import { useKeyPress } from '../hooks/use-key-press.hook.js';
 
 type Props = { em: EventManager, tabs: string[] };
 
 export const TabBar = (props: Props) => {
 	const [ selectedTab, setSelectedTab ] = useState(0);
 
-	useEffect(() => {
-		function listener (payload?: Record<string, unknown>): void {
-			if (payload?.['key'] === 'tab') { return setSelectedTab((selectedTab + 1) % props.tabs.length); };
-		}
-
-		props.em.emit(EventManager.Events.TAB_CHANGE, { tab: selectedTab });
-		props.em.on(EventManager.Events.KEYPRESS, listener);
-
-		return () => {
-			props.em.off(EventManager.Events.KEYPRESS, listener);
+	useKeyPress(props.em, (key) => {
+		if (key.name === 'tab') {
+			setSelectedTab((tab) => tab + 1 % props.tabs.length);
 		};
-	}, [ selectedTab ])
+	}, [ props.tabs ]);
+
+	useEffect(() => {
+		props.em.emit(EventManager.Events.TAB_CHANGE, { tab: selectedTab });
+	}, [ selectedTab ]);
 
 	return (
 		<Box>

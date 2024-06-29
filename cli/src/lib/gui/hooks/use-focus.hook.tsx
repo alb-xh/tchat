@@ -8,9 +8,9 @@ type Props = { em: EventManager, size: number };
 export const useFocus = (props: Props): [ number ] => {
 	const [ focusIndex, setFocus ] = useState(0);
 
-  useKeyPress({ em: props.em, keys: [[ 'up', false ], [ 'down', false ]] }, (key) => {
-    if (key === 'up') { return setFocus(focusIndex - 1 < 0 ? props.size - 1 : focusIndex - 1); }
-    if (key === 'down') { return setFocus(focusIndex + 1 >= props.size ? 0 : focusIndex + 1); }
+  useKeyPress(props.em, (key) => {
+    if (key.name === 'up') { return setFocus(focusIndex - 1 < 0 ? props.size - 1 : focusIndex - 1); }
+    if (key.name === 'down') { return setFocus(focusIndex + 1 >= props.size ? 0 : focusIndex + 1); }
   }, [ focusIndex, props.size ])
 
 	return [ focusIndex ];

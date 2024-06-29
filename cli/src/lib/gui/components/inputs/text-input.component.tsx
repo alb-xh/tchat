@@ -15,26 +15,21 @@ type Props = {
 export const TextInput = (props: Props) => {
   const [ value, setValue ] = useState(props.defaultValue ?? '');
 
-  useKeyPress({ em: props.em }, (key, ctrl) => {
+  useKeyPress(props.em, (key) => {
     if (
       props?.disable
-      || [ 'up', 'down', 'left', 'right', 'tab', 'return' ].includes(key)
-      || (ctrl && key === 'c')
+      || [ 'up', 'down', 'left', 'right', 'tab', 'return' ].includes(key.name)
+      || (key.ctrl && key.name === 'c')
     ) {
       return;
     }
 
-    if ([ 'backspace', 'delete' ].includes(key)) {
+    if ([ 'backspace', 'delete' ].includes(key.name)) {
       setValue(value.slice(0, -1));
       return;
     }
 
-    if (key === 'space') {
-      setValue(value + ' ');
-      return;
-    }
-
-    setValue(value + key);
+    setValue(value + (key.sequence ?? key.name));
   }, [ props.disable, value, setValue ]);
 
   useEffect(() => {

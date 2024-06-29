@@ -18,8 +18,8 @@ type Props = {
 }
 
 export const Button = (props: Props) => {
-  useKeyPress({ em: props.em, keys: [[ 'return', false ]]}, () => {
-    if (props.focused) {
+  useKeyPress(props.em, (key) => {
+    if (props.focused && key.name === 'return') {
       props.onEnter();
     }
   }, [ props.focused, props.onEnter ]);

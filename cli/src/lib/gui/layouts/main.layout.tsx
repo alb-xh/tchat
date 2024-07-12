@@ -34,15 +34,13 @@ export const MainLayout = (props: Props) => {
     { name: 'Register', component: () => <RegisterPage em={props.em} /> },
   ];
 
-  const Page = pages.find((_, i) => i === tabIndex);
-
   return (
     <Box flexDirection='column'>
       <FullDivider />
       <Logo />
       <FullDivider />
       <TabBar em={props.em} tabs={pages.map((p) => p.name)}/>
-      { Page && <Page.component />}
+      {pages.map((page, i) => <Box flexDirection='column' key={page.name} display={tabIndex == i ? 'flex' : 'none'}>{page.component()}</Box>)}
     </Box>
   )
 }

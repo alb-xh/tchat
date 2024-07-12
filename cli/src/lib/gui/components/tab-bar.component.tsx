@@ -12,7 +12,7 @@ export const TabBar = (props: Props) => {
 
 	useKeyPress(props.em, (key) => {
 		if (key.name === 'tab') {
-			setSelectedTab((tab) => tab + 1 % props.tabs.length);
+			setSelectedTab((tab) => tab + 1 < props.tabs.length ? tab + 1 : 0);
 		};
 	}, [ props.tabs ]);
 

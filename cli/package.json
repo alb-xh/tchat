@@ -6,7 +6,7 @@
   "typings": "./src/index.d.ts",
   "scripts": {
     "build": "cd .. && rm -rf ./dist && npx nx build cli",
-    "run-build": "cp -r ./node_modules ../dist/cli/node_modules && cd ../dist/cli/src/ && clear && node ./index.js connect",
+    "run-build": "cp -r ./node_modules ../dist/cli/node_modules && cd ../dist/cli/src/ && clear && node --no-warnings ./index.js connect",
     "dev": "npm run build && npm run run-build"
   },
   "dependencies": {

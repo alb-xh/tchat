@@ -19,24 +19,24 @@ export const LoginPage = (props: Props) => {
 			<Box flexDirection='column' paddingTop={2} paddingX={1} paddingBottom={1} borderStyle='double'>
 				<UnorderedList>
 					<UnorderedList.Item>
-						<Box borderColor={focus === 0 ? 'blueBright' : ''} marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+						<Box borderColor={props.focused && focus === 0 ? 'blueBright' : ''} marginBottom={1} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
 							<Text>Username |</Text>
 							<Box marginLeft={2}>
-								<TextInput em={props.em} disable={focus !== 0} />
+								<TextInput em={props.em} disable={!props.focused || focus !== 0} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
 					<UnorderedList.Item>
-						<Box borderColor={focus === 1 ? 'blueBright' : ''} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
+						<Box borderColor={props.focused && focus === 1 ? 'blueBright' : ''} paddingLeft={1} marginTop={-1} flexDirection='row' borderStyle='round' width={50}>
 							<Text>Password |</Text>
 							<Box marginLeft={2} >
-							<PasswordInput em={props.em} disable={focus !== 1} />
+							<PasswordInput em={props.em} disable={!props.focused || focus !== 1} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
 				</UnorderedList>
 				<Box flexDirection='row' alignSelf='flex-end'>
-					<Submit em={props.em} focused={focus === 2} onEnter={() => {/* n/a */ }} />
+					<Submit em={props.em} focused={props.focused && focus === 2} onEnter={() => {/* n/a */ }} />
 				</Box>
 			</Box>
 		</Box>

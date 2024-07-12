@@ -55,7 +55,7 @@ export const RegisterPage = (props: Props) => {
 						>
 							<Text>Username        |</Text>
 							<Box marginLeft={2}>
-								<TextInput em={props.em} onChange={(vl) => { setUsername(vl); }} disable={focus !== 0} />
+								<TextInput em={props.em} onChange={(vl) => { setUsername(vl); }} disable={!props.focused || focus !== 0} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
@@ -70,7 +70,7 @@ export const RegisterPage = (props: Props) => {
 							width={50}>
 							<Text>Password        |</Text>
 							<Box marginLeft={2}>
-								<PasswordInput em={props.em} onChange={(vl) => { setPassword(vl); }} disable={focus !== 1} />
+								<PasswordInput em={props.em} onChange={(vl) => { setPassword(vl); }} disable={!props.focused || focus !== 1} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
@@ -83,13 +83,13 @@ export const RegisterPage = (props: Props) => {
 							width={50}>
 							<Text>Repeat Password |</Text>
 							<Box marginLeft={2}>
-								<PasswordInput em={props.em} onChange={(vl) => { setRePassword(vl); }} disable={focus !== 2} />
+								<PasswordInput em={props.em} onChange={(vl) => { setRePassword(vl); }} disable={!props.focused || focus !== 2} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
 				</UnorderedList>
 				<Box flexDirection='row' alignSelf='flex-end'>
-					<Submit em={props.em} focused={focus === 3} onEnter={onEnter} />
+					<Submit em={props.em} focused={props.focused && focus === 3} onEnter={onEnter} />
 				</Box>
         <Alert variant='warning'>Please store your password, it can't be reset!</Alert>
 			</Box>

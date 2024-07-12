@@ -29,18 +29,14 @@ export const MainLayout = (props: Props) => {
     }
   }, [ tabIndex ]);
 
-  const pages: { name: string, component: () => JSX.Element }[] = [
-    { name: 'Login', component: () => <LoginPage em={props.em} /> },
-    { name: 'Register', component: () => <RegisterPage em={props.em} /> },
-  ];
-
   return (
     <Box flexDirection='column'>
       <FullDivider />
       <Logo />
       <FullDivider />
-      <TabBar em={props.em} tabs={pages.map((p) => p.name)}/>
-      {pages.map((page, i) => <Box flexDirection='column' key={page.name} display={tabIndex == i ? 'flex' : 'none'}>{page.component()}</Box>)}
+      <TabBar em={props.em} tabs={[ 'Login', 'Register' ]} />
+      <LoginPage em={props.em} focused={tabIndex === 0} />
+      <RegisterPage em={props.em} focused={tabIndex === 1} />
     </Box>
   )
 }

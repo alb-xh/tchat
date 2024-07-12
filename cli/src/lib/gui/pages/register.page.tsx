@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Text, Box } from 'ink';
-import { UnorderedList, PasswordInput, TextInput, Alert } from '@inkjs/ui';
+import { UnorderedList, Alert } from '@inkjs/ui';
 
 import { EventManager } from '../../events/event-manager.js';
 import { Submit } from '../components/buttons/submit.component.js';
-import { HelpButton } from '../components/buttons/help.button.component.js';
-import { HelpField } from '../components/help-field.component.js';
+import { TextInput } from '../components/inputs/text-input.component.js';
+import { PasswordInput } from '../components/inputs/password-input.component.js';
 import { useFocus } from '../hooks/use-focus.hook.js';
-import { useToggle } from '../hooks/use-toggle.hook.js';
 
-type Props = { em: EventManager };
+type Props = { em: EventManager, focused: boolean };
 
 const getBorderColor = (index: number) => (args: { focus: number, error?: string }): string => {
 	if ((args.error ?? '').length > 0) { return 'redBright' };
@@ -24,8 +23,7 @@ export const RegisterPage = (props: Props) => {
 	const [ passwordError, setPasswordError ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	const [ rePasswordError, setRePasswordError ] = useState('');
-	const [ visible, toggle ] = useToggle(false);
-	const [ focus ] = useFocus({ em: props.em, size: 5 });
+	const [ focus ] = useFocus({ em: props.em, disable: !props.focused, size: 4 });
 
 	const onEnter = () => {
 		if (username.length < 4) {
@@ -42,7 +40,7 @@ export const RegisterPage = (props: Props) => {
 	};
 
   return (
-		<Box flexDirection='column'>
+		<Box flexDirection='column' display={props.focused ? 'flex' : 'none'}>
 			<Box flexDirection='column' paddingTop={2} paddingX={1} paddingBottom={1} borderStyle='double'>
 				<UnorderedList>
 					<UnorderedList.Item>
@@ -57,7 +55,7 @@ export const RegisterPage = (props: Props) => {
 						>
 							<Text>Username        |</Text>
 							<Box marginLeft={2}>
-								<TextInput onChange={(vl) => { setUsername(vl); }} isDisabled={focus !== 0} placeholder='' />
+								<TextInput em={props.em} onChange={(vl) => { setUsername(vl); }} disable={focus !== 0} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
@@ -72,7 +70,7 @@ export const RegisterPage = (props: Props) => {
 							width={50}>
 							<Text>Password        |</Text>
 							<Box marginLeft={2}>
-								<PasswordInput onChange={(vl) => { setPassword(vl); }} isDisabled={focus !== 1} placeholder='' />
+								<PasswordInput em={props.em} onChange={(vl) => { setPassword(vl); }} disable={focus !== 1} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
@@ -85,22 +83,16 @@ export const RegisterPage = (props: Props) => {
 							width={50}>
 							<Text>Repeat Password |</Text>
 							<Box marginLeft={2}>
-								<PasswordInput onChange={(vl) => { setRePassword(vl); }} isDisabled={focus !== 2} placeholder='' />
+								<PasswordInput em={props.em} onChange={(vl) => { setRePassword(vl); }} disable={focus !== 2} />
 							</Box>
 						</Box>
 					</UnorderedList.Item>
 				</UnorderedList>
 				<Box flexDirection='row' alignSelf='flex-end'>
 					<Submit em={props.em} focused={focus === 3} onEnter={onEnter} />
-					<HelpButton em={props.em} focused={focus === 4} onEnter={toggle} />
 				</Box>
         <Alert variant='warning'>Please store your password, it can't be reset!</Alert>
 			</Box>
-			<HelpField
-				em={props.em}
-				visible={visible}
-				hotkeys={[[ 'TAB', 'Navigate between tabs' ], [ 'UP/DOWN', 'Navigate between fields' ]]}
-			/>
 		</Box>
   );
 }

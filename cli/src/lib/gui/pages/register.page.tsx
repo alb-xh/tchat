@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, Box } from 'ink';
+import { Text, Box, Newline } from 'ink';
 import { UnorderedList, Alert } from '@inkjs/ui';
 
 import { EventManager } from '../../events/event-manager.js';
@@ -7,6 +7,7 @@ import { Submit } from '../components/buttons/submit.component.js';
 import { TextInput } from '../components/inputs/text-input.component.js';
 import { PasswordInput } from '../components/inputs/password-input.component.js';
 import { useFocus } from '../hooks/use-focus.hook.js';
+import { passwordRegex, usernameRegex } from '../constants.js';
 
 type Props = { em: EventManager, focused: boolean };
 
@@ -26,18 +27,28 @@ export const RegisterPage = (props: Props) => {
 	const [ focus ] = useFocus({ em: props.em, disable: !props.focused, size: 4 });
 
 	const onEnter = () => {
-		if (username.length < 4) {
-			setUsernameError('Username must be at least 4 characters long');
+		if (!usernameRegex.test(username)) {
+			setUsernameError('Username is invalid');
+			setPasswordError('');
+			setRePasswordError('');
+			return;
 		}
 
-		if (password.length < 6) {
-			setPasswordError('Password must be at least 6 characters long')
+		if (!passwordRegex.test(password)) {
+			setUsernameError('');
+			setPasswordError('Password is invalid');
+			setRePasswordError('');
 		}
 
 		if (password !== rePassword) {
+			setUsernameError('');
+			setPasswordError('');
 			setRePasswordError('Passwords must match');
+			return;
 		}
 	};
+
+	const error = usernameError || passwordError || rePasswordError;
 
   return (
 		<Box flexDirection='column' display={props.focused ? 'flex' : 'none'}>
@@ -90,6 +101,9 @@ export const RegisterPage = (props: Props) => {
 				</UnorderedList>
 				<Box flexDirection='row' alignSelf='flex-end'>
 					<Submit em={props.em} focused={props.focused && focus === 3} onEnter={onEnter} />
+				</Box>
+				<Box flexDirection='column' display={error ? 'flex' : 'none'}>
+					<Alert variant='error'>{error}</Alert>
 				</Box>
         <Alert variant='warning'>Please store your password, it can't be reset!</Alert>
 			</Box>

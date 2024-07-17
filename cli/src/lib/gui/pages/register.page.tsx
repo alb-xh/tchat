@@ -12,6 +12,7 @@ export const RegisterPage = (props: Props) => {
 			em={props.em}
 			onSubmit={(vl) => { ''; }}
 			inputs={[ usernameInput, passwordInput, rePasswordInput ]}
+			warning={`Please store your password, it can't be reset!`}
 		/>
 	);
 }

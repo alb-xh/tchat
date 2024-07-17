@@ -24,7 +24,7 @@ export const RegisterPage = (props: Props) => {
 	const [ passwordError, setPasswordError ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	const [ rePasswordError, setRePasswordError ] = useState('');
-	const [ focus ] = useFocus({ em: props.em, disable: !props.focused, size: 4 });
+	const [ focus ] = useFocus({ em: props.em, size: 4 });
 
 	const onEnter = () => {
 		if (!usernameRegex.test(username)) {

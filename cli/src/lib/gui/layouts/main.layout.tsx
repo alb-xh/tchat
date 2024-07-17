@@ -36,7 +36,7 @@ export const MainLayout = (props: Props) => {
       <FullDivider />
       <TabBar em={props.em} tabs={[ 'Login', 'Register' ]} />
       <LoginPage em={props.em} focused={tabIndex === 0} />
-      <RegisterPage em={props.em} focused={tabIndex === 1} />
+      {/* <RegisterPage em={props.em} focused={tabIndex === 1} /> */}
     </Box>
   )
 }

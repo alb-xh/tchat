@@ -4,7 +4,7 @@ import { EventManager } from '../../events/event-manager.js';
 import { Form } from '../components/forms/form.component.js'
 import { passwordInput, usernameInput } from '../constants.js';
 
-type Props = { em: EventManager, focused: boolean };
+type Props = { em: EventManager };
 
 export const LoginPage = (props: Props) => {
   return (

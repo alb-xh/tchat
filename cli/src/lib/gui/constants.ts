@@ -18,3 +18,9 @@ export const passwordInput: FormInputProps = {
   type: 'password',
   validate: (form) => !usernameRegex.test(form['password']) ? 'Password is not valid' : '',
 };
+export const rePasswordInput: FormInputProps = {
+  name: 're-password',
+  label: 'Repeat Password ',
+  type: 'password',
+  validate: (form) => form['password'] !== form['re-password']  ? 'Passwords don\'t match' : '',
+};

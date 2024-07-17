@@ -8,7 +8,16 @@ import { TabBar } from '../components/tab-bar.component.js';
 import { LoginPage } from '../pages/login.page.js';
 import { RegisterPage } from '../pages/register.page.js';
 
+type PageProps = { em: EventManager, tab: number };
 type Props = { em: EventManager };
+
+const Page = (props: PageProps) => {
+  switch (props.tab) {
+    case 0: { return <LoginPage em={props.em} /> };
+    case 1: { return <RegisterPage em={props.em} /> };
+    default: { return ''; }
+  }
+}
 
 export const MainLayout = (props: Props) => {
   const [ tabIndex, setTabIndex ] = useState(0);
@@ -35,8 +44,7 @@ export const MainLayout = (props: Props) => {
       <Logo />
       <FullDivider />
       <TabBar em={props.em} tabs={[ 'Login', 'Register' ]} />
-      <LoginPage em={props.em} focused={tabIndex === 0} />
-      {/* <RegisterPage em={props.em} focused={tabIndex === 1} /> */}
+      <Page em={props.em} tab={tabIndex} />
     </Box>
   )
 }

@@ -3,8 +3,8 @@ import { DataSource } from 'typeorm';
 
 const isProd = process.env.NODE_ENV === 'production';
 const envFile = isProd ? '.prod.env' : '.dev.env';
-const entitiesPath = isProd ? 'dist/apps/backend/src/app/db/entities/*.entity.js' : 'apps/backend/src/app/db/entities/*.entity.ts';
-const migrationsPath = isProd ? 'dist/apps/backend/src/app/db/migrations/*.js' : 'apps/backend/src/app/db/migrations/*.ts';
+const entitiesPath = isProd ? 'dist/apps/backend/src/app/db/entities/*.entity.ts' : 'apps/backend/src/app/db/entities/*.entity.ts';
+const migrationsPath = isProd ? 'dist/apps/backend/src/app/db/migrations/*.js' : 'apps/backend/src/app/db/migrations/*.js';
 
 dotenv.config({ path: envFile });
 

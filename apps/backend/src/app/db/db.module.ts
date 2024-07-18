@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { isProduction } from '../helpers';
-import { options } from './dataSource.js';
-import { User } from './entities/user.entity.js';
-import { Chat } from './entities/chat.entity.js';
+import { options } from './dataSource';
+import { User } from './entities/user.entity';
+import { Chat } from './entities/chat.entity';
 
 const entities = [ User, Chat ];
 

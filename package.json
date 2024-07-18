@@ -2,16 +2,33 @@
   "name": "@tchat/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "d:comp": "docker compose --profile dev --env-file .dev.env",
+    "d:up": "npm run d:comp -- up -d",
+    "d:down": "npm run d:comp -- down",
+    "d:down:v": "npm run d:down -- -v",
+    "env:reset": "npm run d:down:v && npm run d:up && npm run orm:mig:run",
+    "orm": "npx ts-node --project ./tsconfig.base.json --compilerOptions '{\"module\": \"commonjs\"}' -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./apps/backend/src/app/db/dataSource.ts",
+    "orm:mig:show": "npm run orm -- migration:show",
+    "orm:mig:run": "npm run orm -- migration:run",
+    "orm:mig:revert": "npm run orm -- migration:revert",
+    "orm:mig:gen": "npm run orm -- migration:generate ./apps/backend/src/apps/db/migrations/$npm_config_name"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/platform-socket.io": "^10.3.10",
+    "@nestjs/typeorm": "^10.0.2",
+    "@nestjs/websockets": "^10.3.10",
     "axios": "^1.6.0",
+    "bcrypt": "^5.1.1",
+    "pg": "^8.12.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@nestjs/schematics": "^10.0.1",
@@ -28,6 +45,7 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.4.0",
     "@types/node": "~18.16.9",
     "@types/react": "^18.3.3",

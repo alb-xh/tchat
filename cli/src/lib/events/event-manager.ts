@@ -1,19 +1,34 @@
 import readline from 'node:readline';
 import process from 'node:process';
 import EventEmitter from 'node:events';
+import { io } from "socket.io-client";
+
 import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class EventManager {
-  private readonly logger = new Logger(EventManager.name);
-
   static readonly Events = {
     TERMINATE: 'terminate',
     KEYPRESS: 'keypress',
     TAB_CHANGE: 'tab_change',
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    REGISTER: 'register',
+    ME: 'me',
   };
 
+  private readonly logger = new Logger(EventManager.name);
   private readonly eventEmitter = new EventEmitter();
+  private readonly socket = io('http://localhost:3000/', { path: '/ws' });
+  private readonly eventToEmitterMap = {
+    [EventManager.Events.KEYPRESS]: this.eventEmitter,
+    [EventManager.Events.TERMINATE]: this.eventEmitter,
+    [EventManager.Events.TAB_CHANGE]: this.eventEmitter,
+    [EventManager.Events.LOGIN]: this.socket,
+    [EventManager.Events.LOGOUT]: this.socket,
+    [EventManager.Events.ME]: this.socket,
+    [EventManager.Events.REGISTER]: this.socket,
+  };
 
   constructor () {
     this.bindKeypress();
@@ -25,20 +40,27 @@ export class EventManager {
 
   emit (event: string, payload?: Record<string, unknown>): void {
     if (this.isValidEvent(event)) {
-      this.eventEmitter.emit(event, payload);
+      this.getEmitter(event)
+        .emit(event, payload);
     }
   }
 
   on (event: string, cb: (payload?: Record<string, unknown>) => void) {
     if (this.isValidEvent(event)) {
-      this.eventEmitter.on(event, cb)
+      this.getEmitter(event)
+        .on(event, cb)
     }
   }
 
   off (event: string, cb: (payload?: Record<string, unknown>) => void) {
     if (this.isValidEvent(event)) {
-      this.eventEmitter.off(event, cb)
+      this.getEmitter(event)
+        .off(event, cb)
     }
+  }
+
+  private getEmitter (event: string): any {
+    return this.eventToEmitterMap[event];
   }
 
   private bindKeypress () {

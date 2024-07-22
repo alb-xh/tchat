@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from 'ink';
+import { Box, Text } from 'ink';
+import { Spinner } from '@inkjs/ui';
 
 import { EventManager } from '../../events/event-manager.js';
 import { FullDivider } from '../components/divider.component.js';
@@ -7,9 +8,21 @@ import { Logo } from '../components/logo.component.js';
 import { TabBar } from '../components/tab-bar.component.js';
 import { LoginPage } from '../pages/login.page.js';
 import { RegisterPage } from '../pages/register.page.js';
+import _ from 'lodash';
 
 type PageProps = { em: EventManager, tab: number };
 type Props = { em: EventManager };
+
+export const Wrapper = (props: { children: React.ReactNode }) => {
+  return (
+    <Box flexDirection='column'>
+      <FullDivider />
+      <Logo />
+      <FullDivider />
+      {props.children}
+    </Box>
+  )
+}
 
 const Page = (props: PageProps) => {
   switch (props.tab) {
@@ -18,8 +31,7 @@ const Page = (props: PageProps) => {
     default: { return ''; }
   }
 }
-
-export const MainLayout = (props: Props) => {
+export const AuthLayout = (props: Props) => {
   const [ tabIndex, setTabIndex ] = useState(0);
 
   useEffect(() => {
@@ -39,12 +51,57 @@ export const MainLayout = (props: Props) => {
   }, [ tabIndex ]);
 
   return (
-    <Box flexDirection='column'>
-      <FullDivider />
-      <Logo />
-      <FullDivider />
+    <Wrapper>
       <TabBar em={props.em} tabs={[ 'Login', 'Register' ]} />
       <Page em={props.em} tab={tabIndex} />
-    </Box>
-  )
+    </Wrapper>
+  );
+}
+
+export const MainLayout = (props: Props) => {
+  const [ loading, setLoading ] = useState(true);
+  const [ token, setToken ] = useState('fakeToken');
+  const [ user, setUser ] = useState<any>(null);
+
+  useEffect(() => {
+    function listener (payload?: Record<string, unknown>) {
+      if (payload?.['code'] === 200) {
+        setUser(payload?.['payload'] as any);
+      }
+
+      setLoading(false);
+    }
+
+    props.em.on(EventManager.Events.ME, listener);
+    props.em.emit(EventManager.Events.ME, { token });
+
+    return () => {
+      props.em.off(EventManager.Events.ME, listener);
+    }
+  }, [ token ]);
+
+  useEffect(() => {
+    function listener (payload?: Record<string, unknown>) {
+      if (payload?.['code'] === 200) {
+        console.log('token');
+        setToken(_.get(payload as any, 'payload.token', ''));
+      }
+    }
+
+    props.em.on(EventManager.Events.REGISTER, listener);
+
+    return () => {
+      props.em.off(EventManager.Events.REGISTER, listener);
+    }
+  }, []);
+
+  if (loading) {
+    return <Wrapper><Spinner label="Loading" /></Wrapper>;
+  }
+
+  if (user) {
+    return <Wrapper><Text>{`Hey ${user.username}`}</Text></Wrapper>
+  }
+
+  return (<AuthLayout em={props.em} />)
 }

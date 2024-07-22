@@ -13,7 +13,7 @@ export type FormInputProps = { name: string, label: string, type: 'text' | 'pass
 export type FormProps = {
   warning?: string,
   inputs: FormInputProps[],
-  onSubmit: (values: string[]) => void;
+  onSubmit: (form: Record<string, string>) => void;
   em: EventManager,
 };
 
@@ -45,7 +45,7 @@ export const Form = (props: FormProps) => {
     setErrors(newErrors);
 
     if (newErrors.join('').length === 0) {
-      props.onSubmit(values);
+      props.onSubmit(form);
     }
 	};
 

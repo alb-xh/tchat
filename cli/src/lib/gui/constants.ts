@@ -2,8 +2,8 @@ import { FormInputProps } from "./components/forms/form.component";
 
 export const usernameRegex = new RegExp('^[A-Za-z][A-Za-z0-9_]{4,29}$');
 
-// Minimum eight characters, at least one letter and one number
-export const passwordRegex = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$');
+// Minimum 4 characters, at least one letter and one number
+export const passwordRegex = new RegExp('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{4,20}$');
 
 export const usernameInput: FormInputProps = {
   name: 'username',

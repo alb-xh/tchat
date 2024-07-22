@@ -43,7 +43,7 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @ConnectedSocket() client: Socket,
     @MessageBody() msg: { token: string },
   ): Promise<void> {
-    this.logger.debug('Me');
+    this.logger.debug('Me', msg);
 
     if (!msg.token) {
       client.emit('me', new BadRequest());
@@ -74,7 +74,7 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): Promise<void> {
     this.logger.debug('Login');
 
-    if (msg.username.length < 6 || msg.password.length < 8) {
+    if (msg.username.length < 4 || msg.password.length < 4) {
       client.emit('login', new BadRequest());
       return;
     }
@@ -101,9 +101,9 @@ export class WsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @ConnectedSocket() client: Socket,
     @MessageBody() msg: { username: string, password: string },
   ) {
-    this.logger.debug('register');
+    this.logger.debug('register', msg);
 
-    if (msg.username.length < 6 || msg.password.length < 8) {
+    if (msg.username.length < 4 || msg.password.length < 4) {
       client.emit('register', new BadRequest());
       return;
     }

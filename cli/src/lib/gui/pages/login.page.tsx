@@ -10,8 +10,13 @@ export const LoginPage = (props: Props) => {
   return (
 		<Form
 			em={props.em}
-			onSubmit={(vl) => { ''; }}
 			inputs={[ usernameInput, passwordInput ]}
+			onSubmit={(form) => {
+				props.em.emit(EventManager.Events.LOGIN, {
+					username: form['username'],
+					password: form['password'],
+				});
+			}}
 		/>
 	)
 }

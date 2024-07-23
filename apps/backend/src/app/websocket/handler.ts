@@ -14,7 +14,7 @@ export const Handler = (event: string) => (target: object, property: string, des
     if (!reply) { return; }
 
     logger.debug(`Response: ${JSON.stringify(reply)}`, event);
-    client.emit(event, msg);
+    client.emit(event, reply);
   }
 
   ConnectedSocket()(descriptor, 'value', 0);

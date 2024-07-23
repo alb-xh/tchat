@@ -63,7 +63,6 @@ export class Gateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     const secret = this.configService.getOrThrow('TOKEN_SECRET');
     const token = await new Token(secret).generate(user.id);
-    console.log(token);
 
     return new Ok({ token });
   }

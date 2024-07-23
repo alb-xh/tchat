@@ -10,7 +10,6 @@ export class Debugger {
     return !isProduction();
   }
 
-
   async log (...messages: any[]): Promise<void> {
     if (!this.isEnabled()) { return; }
 

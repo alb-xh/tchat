@@ -1,9 +1,10 @@
+import { resolve } from 'node:path';
 import { writeFile } from 'fs/promises';
 
-import { isProduction } from "../helpers.js";
+import { isProduction, getDirname } from "../helpers.js";
 
 export class Debugger {
-  static FILE = 'debug.txt'
+  static FILE = resolve(getDirname(), 'debug.txt');
   constructor (private readonly context: string) {}
 
   isEnabled () {

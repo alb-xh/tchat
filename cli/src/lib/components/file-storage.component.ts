@@ -16,11 +16,15 @@ export class FileStorage {
     const storage = await this.getStorage();
     storage[key] = value;
 
-    await writeFile(this.filePath, JSON.stringify(storage), 'utf-8');
+    await writeFile(this.filePath, JSON.stringify(storage), { flag: 'a+', encoding: 'utf-8' },);
   }
 
   private async getStorage (): Promise<Record<string, unknown>> {
-    const content = await readFile(this.filePath, 'utf-8');
-    return JSON.parse(content);
+    try {
+      const content = await readFile(this.filePath, 'utf-8');
+      return JSON.parse(content);
+    } catch {
+      return {};
+    }
   }
 }

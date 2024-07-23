@@ -9,6 +9,7 @@ import { TabBar } from '../components/tab-bar.component.js';
 import { LoginPage } from '../pages/login.page.js';
 import { RegisterPage } from '../pages/register.page.js';
 import _ from 'lodash';
+import { Debugger } from '../../components/debugger.component.js';
 
 type PageProps = { em: EventManager, tab: number };
 type Props = { em: EventManager };
@@ -58,9 +59,11 @@ export const AuthLayout = (props: Props) => {
   );
 }
 
+const debug = new Debugger('MainLayout');
+
 export const MainLayout = (props: Props) => {
   const [ loading, setLoading ] = useState(true);
-  const [ token, setToken ] = useState('fakeToken');
+  const [ token, setToken ] = useState('');
   const [ user, setUser ] = useState<any>(null);
 
   useEffect(() => {
@@ -83,7 +86,7 @@ export const MainLayout = (props: Props) => {
   useEffect(() => {
     function listener (payload?: Record<string, unknown>) {
       if (payload?.['code'] === 200) {
-        console.log('token');
+        debug.log('Token', payload);
         setToken(_.get(payload as any, 'payload.token', ''));
       }
     }
